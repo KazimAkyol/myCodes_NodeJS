@@ -175,3 +175,7 @@ const newCar = new carConstructor("Ford", "Mustang", 1990);
 console.log(newCar);
 console.log(typeof newCar);
 console.log(newCar.startEngine());
+
+const mercedes = new carConstructor("Mercedes", "Maybach", 2025);
+console.log(mercedes);
+console.log(mercedes.startEngine());
