@@ -1,5 +1,7 @@
 "use strict";
 
+const { testFunc1, testFunc2 } = require("./module/module.js");
+
 // $ npm init -y
 // npm install // package-lock.json olusturur.
 // nodemon // nodemon index.js'de calistirir ve izler.
@@ -22,7 +24,7 @@ require("./module/module.js");
 // func1();
 // test2();
 
-/* ----------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------- *
 
 const singleFunc = require("./module/module.js");
 singleFunc();
@@ -36,5 +38,9 @@ testFunc2();
 const [testFunc1, testFunc2] = require("./module/module.js");
 testFunc1();
 /* ----------------------------------------------------------------------------- */
+
+//! direkt export olarak karsilama:
+testFunc1();
+testFunc2();
 /* ----------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------- */

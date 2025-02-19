@@ -27,7 +27,7 @@ module.exports = {
   test2: testFunc2,
 };
 
-/* ----------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------- *
 
 //! tek fonksiyon icinden cagirma:
 
@@ -48,6 +48,27 @@ const singleFunc = function () {
 
 module.exports = singleFunc;
 
+/* ----------------------------------------------------------------------------- *
+
+//! array olarak disari aktarma:
+
+const testFunc1 = function () {
+  console.log("testFunc1 running");
+};
+const testFunc2 = function () {
+  console.log("testFunc2 running");
+};
+
+module.exports = [testFunc1, testFunc2];
 /* ----------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------- */
+
+//! direkt export
+
+module.exports.testFunc1 = function () {
+  console.log("testFunc1 running");
+};
+
+module.exports.testFunc2 = function () {
+  console.log("testFunc2 running");
+};
 /* ----------------------------------------------------------------------------- */
