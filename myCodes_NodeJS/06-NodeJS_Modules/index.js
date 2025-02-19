@@ -37,10 +37,23 @@ testFunc2();
 //! array olarak karsilama
 const [testFunc1, testFunc2] = require("./module/module.js");
 testFunc1();
-/* ----------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------- *
 
 //! direkt export olarak karsilama:
 testFunc1();
 testFunc2();
 /* ----------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------- */
+
+//* Bizim kullanacagimiz import yöntemi:
+
+const {
+  test1: func1,
+  test2,
+  test3,
+  variable: deger,
+} = require("./module/module.js");
+
+func1();
+test2();
+test3();
+console.log(deger);
