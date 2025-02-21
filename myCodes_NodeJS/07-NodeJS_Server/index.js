@@ -45,7 +45,7 @@ const app = http.createServer((req, res) => {
   if (req.url == "/") {
     if (req.method == "GET") {
       //* default zaten GET'tir.
-      res.end("<h1> Welcome to HomePage </h1>");
+      res.end("<h1> Welcome to Home Page </h1>");
     } else if (req.method == "POST") {
       //* eger methodumuz POST ise;
       res.statusCode = 400;
