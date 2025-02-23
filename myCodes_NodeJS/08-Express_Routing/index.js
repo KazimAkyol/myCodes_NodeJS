@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /* ------------------------------------------------------------------------ *
                                EXPRESS & ROUTING
@@ -6,6 +6,14 @@
 
 // $ npm init -y => create package.json
 // npm i express dotenv
+
+//* Express Start
+
+const express = require("express"); // Express değişkenine express Framework atadik.
+
+const app = express(); // Run application on express.
+
+app.listen(8000, () => console.log("Running at: http://127.0.0.1:8000"));
 
 /* ------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------ */
