@@ -21,8 +21,8 @@ const PORT = process.env.PORT;
 /* ------------------------------------------------------------------ *
 //* "Router" is special app for URL control in ExpressJS.
 
+//* app-route
 app.get("/", (req, res) => {
-  //* app-route
   res.send({
     message: "Merhaba Cohort DE-10",
   });
@@ -37,7 +37,7 @@ router.get("/user/:id", (req, res) => res.send({ message: req.params.id }));
 app.use(router); //* router application'ini app application'a tanimladik.
 
 /* ------------------------------------------------------------------ */
-// const router = require("./routes/index.js"); //* burada router'in nerede tanimlandigi belirtilir.
+// const router = require("./routes/index.js"); //* index.js'ten export edilen router import edilir.
 // const router = require("./routes/index");
 // const router = require("./routes/");
 // app.use(router);
