@@ -87,6 +87,25 @@ app.get("/async", async (req, res, next) => {
 });
 
 /*------------------------------------------------------ */
+//* Error Handler Middleware
+
+//* throw atilarak, try-catch blogu olmadan da calisir. Bu errorHandler'in gücünü gösterir.
+//* errorHandler'dan habersiz hicbir hata attirilamaz.
+//* errorHandler kodlarin en altinda bulunmali.
+//* errorHandler can not catch the async functions errors. For this one we can use catch method like this : catch(this)
+
+//* Hatanin kimden kaynaklandigini statusCode olarak ifade edebilmek icin; örnegin id number olmasi gerekirken baska bir veri girildiginde 400(Bad Request), res degiskeninin yazilmasi unutuldugunda 500(Internal Server Error); bir statusCode tanimlanir ve url girilen veriye göre hata türü elde edilir.
+
+const errorHandler = (err,req,res,next) => {
+    console.log('error handler worked')
+    const statusCode = res.errorStatusCode ?? 500
+    res.status(statusCode).send({
+        error:true,
+        message: err.message, // This is error message.
+        cause:err.cause, // This dicribes the reason of the error.
+    })
+}
+
 /*------------------------------------------------------ */
 
 app.listen(PORT, () => console.log("Running http://127.0.0.1:" + PORT));
