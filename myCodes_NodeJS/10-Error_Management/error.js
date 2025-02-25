@@ -76,7 +76,16 @@ app.get("/async", async (req, resizeBy, next) => {
 /*------------------------------------------------------ */
 //* express-async-errors
 
-//* 
+//* Proje durdurulur ve npm adresinden express-async-errors kurulumu (npm i express-async-errors) Terminal'de yapildiktan sonra nodemon ile tekrar calistirilir.
+//* This module helps errorHandler to catch async errors.
+
+require("express-async-errors");
+
+app.get("/async", async (req, res, next) => {
+  res.errorStatusCode = 400;
+  throw new Error("Created error in self-async-fn");
+});
+
 /*------------------------------------------------------ */
 /*------------------------------------------------------ */
 
