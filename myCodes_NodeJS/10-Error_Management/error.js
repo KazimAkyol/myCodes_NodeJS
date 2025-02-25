@@ -96,15 +96,20 @@ app.get("/async", async (req, res, next) => {
 
 //* Hatanin kimden kaynaklandigini statusCode olarak ifade edebilmek icin; örnegin id number olmasi gerekirken baska bir veri girildiginde 400(Bad Request), res degiskeninin yazilmasi unutuldugunda 500(Internal Server Error); bir statusCode tanimlanir ve url girilen veriye göre hata türü elde edilir.
 
-const errorHandler = (err,req,res,next) => {
-    console.log('error handler worked')
-    const statusCode = res.errorStatusCode ?? 500
-    res.status(statusCode).send({
-        error:true,
-        message: err.message, // This is error message.
-        cause:err.cause, // This dicribes the reason of the error.
-    })
-}
+const errorHandler = (err, req, res, next) => {
+  console.log("error handler worked");
+  const statusCode = res.errorStatusCode ?? 500;
+  res.status(statusCode).send({
+    error: true,
+    message: err.message, // This is error message.
+    cause: err.cause, // This dicribes the reason of the error.
+    // stack: err.stack, // Error Details
+  });
+};
+
+//* for run errorHandler call in use.
+//* It must be at last middleware.
+app.use(errorHandler);
 
 /*------------------------------------------------------ */
 
