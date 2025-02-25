@@ -3,8 +3,8 @@
 const { testFunc1, testFunc2 } = require("./module/module.js");
 
 // $ npm init -y
-// npm install // package-lock.json olusturur.
-// nodemon // nodemon index.js'de calistirir ve izler.
+// $ npm install //* package-lock.json olusturur.
+// $ nodemon //* nodemon index.js'de calistirir ve izler.
 
 console.log("indexjs");
 
@@ -34,12 +34,12 @@ testFunc2();
 
 /* ----------------------------------------------------------------------------- *
 
-//! array olarak karsilama
+//* array olarak karsilama
 const [testFunc1, testFunc2] = require("./module/module.js");
 testFunc1();
 /* ----------------------------------------------------------------------------- *
 
-//! direkt export olarak karsilama:
+//* direkt export olarak karsilama:
 testFunc1();
 testFunc2();
 /* ----------------------------------------------------------------------------- */

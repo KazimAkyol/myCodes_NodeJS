@@ -43,4 +43,6 @@ app.use(router); //* router application'ini app application'a tanimladik.
 // app.use(router);
 app.use(require("./routes/"));
 
+/* ------------------------------------------------------------------ */
+
 app.listen(PORT, () => console.log("Running at: http://127.0.0.1:" + PORT));
