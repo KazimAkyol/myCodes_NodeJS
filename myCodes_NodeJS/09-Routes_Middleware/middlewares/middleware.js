@@ -28,3 +28,22 @@ app.get("/", (req, res) => {
     message: "Hello Cohort DE-10",
   });
 });
+
+/* ------------------------------------------------------------------------ */
+
+//* Sending data from middleware to others routes.
+app.get("/", (req, res, next) => {
+  if (req.query.username) {
+    req.username = req.query?.username;
+    next();
+  } else {
+    req.send({
+      message: "username is wrong",
+    });
+  }
+});
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+
+app.listen(PORT, () => console.log("Running at: http://127.0.0.1:" + PORT));
