@@ -17,18 +17,24 @@ const PORT = process.env.PORT || 8000;
 
 /* ------------------------------------------------------- */
 
+// Parse data
 app.use(express.json());
 
+// Catch error from async
 require("express-async-errors");
 
+// DB Connection
+// const dbConnection = require("./src/dbConnection");
+// dbConnection();
+require("./src/dbConnection")();
+
+// Main route
 app.all("/", (req, res) => {
   res.send("WELCOME TO BLOG API");
 });
 
-// continue from here...
-
-// Catch Errors:
-app.use(require("./src/errorHandler"));
+// Error Handler:
+app.use(require("./src/middlewares/errorHandler"));
 
 /* ------------------------------------------------------- */
 
