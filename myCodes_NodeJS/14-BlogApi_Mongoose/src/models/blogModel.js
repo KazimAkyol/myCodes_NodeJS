@@ -8,7 +8,7 @@
 const mongoose = require("mongoose");
 
 /* ----------------------------------------------------------------------- */
-//* BlogCtegory Schema
+//* BlogCategory Schema
 
 // Create Schema
 const blogCategorySchema = new mongoose.Schema(
@@ -35,14 +35,14 @@ const BlogCategory = mongoose.model("BlogCategory", blogCategorySchema);
 
 const blogPostSchema = new mongoose.Schema(
   {
-    // _id: , // Hexadecimal type
+    // _id: , // hexadecimal type
 
     categoryId: {
       // default relation: ManyToOne
       type: mongoose.Schema.Types.ObjectId,
       ref: "BlogCategory",
       required: true,
-      unique: true, // convert to OneToOne Relation.
+      //   unique: true, // convert to OneToOne Relation.
     },
 
     title: {
