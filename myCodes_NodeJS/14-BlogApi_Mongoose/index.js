@@ -33,6 +33,9 @@ app.all("/", (req, res) => {
   res.send("WELCOME TO BLOG API");
 });
 
+// Blog route
+app.use.require("./src/routes/blogRouter");
+
 // Error Handler:
 app.use(require("./src/middlewares/errorHandler"));
 
