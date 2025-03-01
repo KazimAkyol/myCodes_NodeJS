@@ -34,7 +34,7 @@ app.all("/", (req, res) => {
 });
 
 // Blog route
-app.use.require("./src/routes/blogRouter");
+app.use(require("./src/routes/blogRouter"));
 
 // Error Handler:
 app.use(require("./src/middlewares/errorHandler"));

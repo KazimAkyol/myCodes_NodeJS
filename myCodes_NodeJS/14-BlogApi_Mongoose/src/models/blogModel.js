@@ -73,7 +73,7 @@ const BlogPost = mongoose.model("Blogpost", blogPostSchema);
 
 module.exports = { BlogCategory, BlogPost };
 
-/* ----------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------- *
 //* Sample
 //* Create Schema
 //* new mongoose.Schema({fields}, {options});
@@ -119,3 +119,5 @@ const nameSchema = new mongoose.Schema(
 //* mongoose.model("ModelName", nameSchema);
 
 const ModelName = mongoose.model("ModelName", nameSchema);
+
+/* ----------------------------------------------------------------------- */
