@@ -6,7 +6,9 @@
 // Call Models:
 const { BlogCategory, BlogPost } = require("../models/blogModel");
 
-module.exports = {
+/* ---------------------------------------------------- */
+// BlogCategory Controller:
+module.exports.blogCategory = {
   list: async (req, res) => {
     const result = await BlogCategory.find();
 
@@ -78,5 +80,39 @@ module.exports = {
       res.errorStatusCode = 404;
       throw new Error("Data is not found or already deleted.");
     }
+  },
+};
+
+/*------------------------------------------------------ */
+// BlogPost Controller:
+module.exports.blogPost = {
+  list: async (req, res) => {
+    // await BlogPost.find({ ...filter }, { selecet });
+    // const result = await BlogPost.find();
+
+    //* the field you want display give true value. _id default is true
+    //* the field you want to expand with more detail, send the name of in populate method.
+    const result = await BlogPost.find();
+
+    res.status(200).send({
+      error: false,
+      result,
+    });
+  },
+
+  //* CRUD ->
+
+  create: async (req, res) => {
+    const result = await BlogPost.create(req.body);
+
+    res.status(201).send({
+      error: false,
+      result,
+    });
+  },
+
+  read: async (req, res) => {
+    // await BlogPost.findOne({ ...filter });
+    // const result = await BlogPost({ _id: req.params.blogId });
   },
 };
