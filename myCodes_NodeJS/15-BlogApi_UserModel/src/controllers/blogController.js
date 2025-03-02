@@ -4,47 +4,44 @@
 ------------------------------------------------------- */
 
 // Call Models:
-const { BlogCategory, BlogPost } = require('../models/blogModel');
+const { BlogCategory, BlogPost } = require("../models/blogModel");
 
 module.exports = {
+  list: async (req, res) => {
+    const result = await BlogCategory.find();
 
-    list: async (req, res) => {
+    res.status(200).send({
+      error: false,
+      result,
+    });
+  },
 
-        const result = await BlogCategory.find();
+  // CRUD ->
 
-        res.status(200).send({
-            error: false,
-            result
-        })
-    },
+  create: async (req, res) => {
+    const result = await BlogCategory.create(req.body); //* create edecegim veriyi req.body ile Thunder'dan aliyorum.
 
-    //TODO: Finish crud oparations.
+    res.status(201).send({
+      error: false,
+      result,
+    });
+  },
 
-    create: async (req, res) => {
+  read: async (req, res) => {
+    res.status().send({
+      error: false,
+    });
+  },
 
-        res.status().send({
-            error: false
-        })
-    },
+  update: async (req, res) => {
+    res.status().send({
+      error: false,
+    });
+  },
 
-    read: async (req, res) => {
-
-        res.status().send({
-            error: false
-        })
-    },
-
-    update: async (req, res) => {
-
-        res.status().send({
-            error: false
-        })
-    },
-
-    delete: async (req, res) => {
-
-        res.status().send({
-            error: false
-        })
-    },
-}
+  delete: async (req, res) => {
+    res.status().send({
+      error: false,
+    });
+  },
+};
