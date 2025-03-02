@@ -12,7 +12,7 @@ const blogCategory = require("../controllers/blogController");
 
 router.route("/blog").get(blogCategory.list).post(blogCategory.create);
 
-router.route('/blog/:categoryId').get(blogCategory.read)
+router.route("/blog/:categoryId").get(blogCategory.read);
 
 /* ------------------------------------------------------- */
 module.exports = router;

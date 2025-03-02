@@ -28,11 +28,11 @@ module.exports = {
   },
 
   read: async (req, res) => {
-
     // await BlogCategory.findOne({...filter})
-    await BlogCategory.findOne({_id:req.params.categoryId})
-    res.status().send({
+    const result = await BlogCategory.findOne({ _id: req.params.categoryId });
+    res.status(200).send({
       error: false,
+      result,
     });
   },
 
