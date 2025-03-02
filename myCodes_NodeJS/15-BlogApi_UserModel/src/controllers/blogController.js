@@ -87,7 +87,7 @@ module.exports.blogCategory = {
 // BlogPost Controller:
 module.exports.blogPost = {
   list: async (req, res) => {
-    // await BlogPost.find({ ...filter }, { selecet });
+    // await BlogPost.find({ ...filter }, { select });
     // const result = await BlogPost.find();
 
     //* the field you want display give true value. _id default is true
@@ -113,6 +113,55 @@ module.exports.blogPost = {
 
   read: async (req, res) => {
     // await BlogPost.findOne({ ...filter });
-    // const result = await BlogPost({ _id: req.params.blogId });
+    // const result = await BlogPost.findOne({ _id: req.params.blogId });
+    const result = await BlogPost.findById(req.params.blogId);
+
+    res.status(200).send({
+      error: false,
+      result,
+    });
+  },
+
+  update: async (req, res) => {
+    // await BlogPost.updateOne({ ...filter }, { ...data })
+
+    //* response from updateOne (Thunder document reading) : {
+    // "acknowledged": true, // if update methods ends successfuly
+    // "modifiedCount": 1, // if returns 0 : no any data updated cause data is already up to date.
+    // "upsertedId": null,
+    // "upsertedCount": 0,
+    // "matchedCount": 1 // number of data matches with our filter.
+    // },
+
+    const result = await BlogPost.updateOne(
+      { _id: req.params.blogId },
+      req.body
+    );
+
+    res.status(202).send({
+      error: false,
+      result,
+      new: await BlogPost.findById(req.params.blogId),
+    });
+  },
+
+  delete: async (req, res) => {
+    // await BlogPost.deleteOne({ ...filter });
+
+    //* response from deleteOne (Thunder document reading) : {
+    // "acknowledged": true, // if delete methods ends successfuly
+    // "deletedCount": 1, // if returns 0 : no any data delete cause data is not found or already deleted.
+    // },
+
+    const result = await BlogPost.deleteOne({ _id: req.params.blogId });
+
+    if (result.deletedCount) {
+      res.sendStatus(204);
+    } else {
+      res.errorStatusCode = 404;
+      throw new Error("Data is not found or already deleted.");
+    }
   },
 };
+
+// module.exports = { blogCategory, blogPost }
