@@ -40,6 +40,16 @@ module.exports = {
 
   update: async (req, res) => {
     // const result = await BlogCategory.updateOne({ ...filter }, { ...data });
+
+    //* response from updateOne (Thunder document reading) :
+    //     "result": {
+    //     "acknowledged": true, // if update methods ends successfuly
+    //     "modifiedCount": 1, // if returns 0 : no any data updated cause data is already up to date.
+    //     "upsertedId": null,
+    //     "upsertedCount": 0,
+    //     "matchedCount": 1 // number of data matches with our filter.
+    //   },
+
     const result = await BlogCategory.updateOne(
       { _id: req.params.categoryId },
       req.body
@@ -48,12 +58,25 @@ module.exports = {
     res.status(202).send({
       error: false,
       result,
+      new: await BlogCategory.findById(req.params.categoryId), //* update ettikten sonra elimizdeki mevcut data'nin son durumunu görebilmek icin.
     });
   },
 
   delete: async (req, res) => {
-    res.status().send({
-      error: false,
-    });
+    // await BlogCategory.deleteOne({ ...filter });
+    const result = await BlogCategory.deleteOne({ _id: req.params.categoryId });
+
+    //* response from deleteOne (Thunder document reading) :
+    //     "result": {
+    //     "acknowledged": true, // if delete methods ends succesfuly
+    //     "deletedCount": 1 // if returns 0 : no any data delete cause data is not found or already deleted.
+    //   },
+
+    if (result.deletedCount) {
+      res.sendStatus(204);
+    } else {
+      res.errorStatusCode = 404;
+      throw new Error("Data is not found or already deleted.");
+    }
   },
 };
