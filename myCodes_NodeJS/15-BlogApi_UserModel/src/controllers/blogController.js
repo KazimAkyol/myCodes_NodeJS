@@ -29,7 +29,9 @@ module.exports = {
 
   read: async (req, res) => {
     // await BlogCategory.findOne({...filter})
-    const result = await BlogCategory.findOne({ _id: req.params.categoryId });
+    // const result = await BlogCategory.findOne({ _id: req.params.categoryId });
+    const result = await BlogCategory.findById(req.params.categoryId);
+
     res.status(200).send({
       error: false,
       result,
@@ -37,8 +39,15 @@ module.exports = {
   },
 
   update: async (req, res) => {
-    res.status().send({
+    // const result = await BlogCategory.updateOne({ ...filter }, { ...data });
+    const result = await BlogCategory.updateOne(
+      { _id: req.params.categoryId },
+      req.body
+    );
+
+    res.status(202).send({
       error: false,
+      result,
     });
   },
 
