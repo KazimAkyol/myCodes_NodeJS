@@ -10,7 +10,7 @@ const user = require("../controllers/userController");
 /* ------------------------------------------------------- */
 // URL: /user ->
 
-router.route("category").get(user.list).post(user.create);
+router.route("/").get(user.list).post(user.create);
 
 router.route("/:userId").get(user.read).put(user.update).delete(user.delete);
 
