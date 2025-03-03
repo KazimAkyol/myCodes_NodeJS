@@ -3,6 +3,10 @@
          EXPRESSJS - BLOG Project with Mongoose
 ------------------------------------------------------- */
 
+// Call Model;
+
+const User = require("../models/userModel");
+
 /* ---------------------------------------------------- */
 
 module.exports = {
@@ -56,5 +60,24 @@ module.exports = {
       result,
       new: await User.findById(req.params.userId),
     });
+  },
+
+  delete: async (req, res) => {
+    // await User.deleteOne({...filter})
+
+    //* response from updateOne (Thunder document reading) :
+    //     "result": {
+    //     "acknowledged": true, // if delete methods ends succesfuly
+    //     "deletedCount": 1 // if returns 0 : no any data delete cause data is not found or already deleted.
+    //   },
+
+    const result = await User.deleteOne({ _id: req.params.userId });
+
+    if (result.deletedCount) {
+      res.sendStatus(204);
+    } else {
+      res.errorStatusCode = 404;
+      throw new Error("Data is not found or already deleted.");
+    }
   },
 };

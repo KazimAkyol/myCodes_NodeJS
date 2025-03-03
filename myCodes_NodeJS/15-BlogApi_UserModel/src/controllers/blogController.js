@@ -18,7 +18,7 @@ module.exports.blogCategory = {
     });
   },
 
-  // CRUD ->
+  //* CRUD ->
 
   create: async (req, res) => {
     const result = await BlogCategory.create(req.body); //* create edecegim veriyi req.body ile Thunder'dan aliyorum.
