@@ -107,6 +107,12 @@ module.exports.blogPost = {
   //* CRUD ->
 
   create: async (req, res) => {
+    if (!req.user) {
+      // if user not logged in dont allow to write a post
+      res.errorStatusCode = 403;
+      throw new Error("You must login to create a post.");
+    }
+
     req.body.userId = req.user._id;
 
     const result = await BlogPost.create(req.body);

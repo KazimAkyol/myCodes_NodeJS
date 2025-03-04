@@ -1,10 +1,5 @@
 "use strict";
 /* -------------------------------------------------------
-            EXPRESSJS - BLOG Project with Mongoose
-------------------------------------------------------- */
-
-"use strict";
-/* -------------------------------------------------------
     EXPRESSJS - BLOG Project with Mongoose
 ------------------------------------------------------- */
 const User = require("./src/models/userModel");
