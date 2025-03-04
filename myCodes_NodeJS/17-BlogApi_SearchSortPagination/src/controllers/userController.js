@@ -1,13 +1,12 @@
 "use strict";
 /* -------------------------------------------------------
-         EXPRESSJS - BLOG Project with Mongoose
+            EXPRESSJS - BLOG Project with Mongoose
 ------------------------------------------------------- */
 
-// Call Model;
+// Call Model:
+const User = require("../models/blogModel");
 
-const User = require("../models/userModel");
-
-/* ---------------------------------------------------- */
+/* ------------------------------------------------------*/
 
 module.exports = {
   list: async (req, res) => {
@@ -19,17 +18,9 @@ module.exports = {
     });
   },
 
-  //* CRUD ->
+  // CRUD ->
 
   create: async (req, res) => {
-    console.log(req.body);
-    if (req.body.password.length < 8) {
-      res.errorStatusCode = 400;
-      throw new Error("The password must be more than 8 character.");
-    }
-
-    //* Body-JSON'da yazilan password en az 8 karakter olarak gönderilmediginde bize bir throw new Error döner ve hata mesaji yazdirilir.
-
     const result = await User.create(req.body);
 
     res.status(201).send({
@@ -39,8 +30,8 @@ module.exports = {
   },
 
   read: async (req, res) => {
-    // await User.findOne({ ...filter });
-    // const result = await User.findById({ _id: req.params.userId });
+    // await User.findOne({...filter})
+    // const result = await User.findOne({ _id: req.params.userId });
     const result = await User.findById(req.params.userId);
 
     res.status(200).send({
@@ -77,8 +68,7 @@ module.exports = {
     //     "result": {
     //     "acknowledged": true, // if delete methods ends succesfuly
     //     "deletedCount": 1 // if returns 0 : no any data delete cause data is not found or already deleted.
-    //   },
-
+    //   }
     const result = await User.deleteOne({ _id: req.params.userId });
 
     if (result.deletedCount) {
