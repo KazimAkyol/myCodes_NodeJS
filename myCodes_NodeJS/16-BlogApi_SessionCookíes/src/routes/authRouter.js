@@ -2,8 +2,8 @@
         EXPRESSJS - BLOG Project with Mongoose
 ------------------------------------------------------- */
 
-const router = require("express").Router(); //* router' tanimliyoruz
-const auth = require("../controllers/authController"); //* 
+const router = require("express").Router(); //* router'i tanimliyoruz.
+const auth = require("../controllers/authController"); //* controller'da tanimlanan auth'u buraya cagiriyoruz.
 
 /* ----------------------------------------------------- */
 // URL: /auth ->

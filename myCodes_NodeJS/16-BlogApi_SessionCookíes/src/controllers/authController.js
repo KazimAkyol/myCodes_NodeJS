@@ -4,18 +4,38 @@
 ------------------------------------------------------- */
 // Call Model;
 
+const User = require('../models/userModel')
+
 module.exports = {
-    login: async (req,res) => {
+  login: async (req, res) => {
 
-        res.send({
-            error: false,
-        })
-    },
+    const {email,password} = req.body
 
-    logout: async (req,res) => {
+    //* email ve password'ü gönderip göndermedigini kontrol etmek icin:
 
-        res.send({
-            error: false,
-        })
+    if (email && password) {
+
+        const user = await User.findOne({email})
+
+        if(user) {
+            res.send({
+                error: false,
+              })
+        }
+
+        
+
+    } else {
+        res.errorStatusCode = 401
+        throw new Error('Email and Password required.')
     }
-}
+
+    
+  },
+
+  logout: async (req, res) => {
+    res.send({
+      error: false,
+    });
+  },
+};
