@@ -2,7 +2,6 @@
 /* -------------------------------------------------------
          EXPRESSJS - BLOG Project with Mongoose
 ------------------------------------------------------- */
-
 // Call Model;
 
 const User = require("../models/userModel");
