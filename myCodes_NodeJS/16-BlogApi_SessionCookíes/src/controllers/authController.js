@@ -7,6 +7,7 @@
 const User = require("../models/userModel");
 
 module.exports = {
+  //* kisi login oldugunda buradaki login controller calisacak.
   login: async (req, res) => {
     const { email, password } = req.body;
 

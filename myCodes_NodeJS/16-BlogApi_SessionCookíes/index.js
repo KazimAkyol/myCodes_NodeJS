@@ -29,11 +29,31 @@ require("express-async-errors");
 require("./src/dbConnection")();
 
 /* ------------------------------------------------------- */
+//* SessionCookies
+// https://expressjs.com/en/resources/middleware/cookie-session.html
+// https://www.npmjs.com/package/cookie-session
+// $ npm i cookie-session
+
+const session = require("cookie-session"); // Session is a middleware
+
+app.use(
+  session({
+    // Options
+    secret: process.env.SECRET_KEY, // to encrypte cookies and session
+    maxAge: 1000 * 60 * 60 * 24 * 2, // miliSeconds // 2 days
+  })
+);
+
+/* ------------------------------------------------------- */
 //* Routes
 
 // Main route
 app.all("/", (req, res) => {
-  res.send("WELCOME TO BLOG API");
+  res.send({
+    error: false,
+    message: "WELCOME TO BLOG API",
+    session: req.session,
+  });
 });
 
 // blog & user & auth routes
