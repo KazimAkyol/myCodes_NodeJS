@@ -88,15 +88,23 @@ module.exports.blogCategory = {
 // BlogPost Controller:
 module.exports.blogPost = {
   list: async (req, res) => {
-    // await BlogPost.find({ ...filter }, { select });
-    // const result = await BlogPost.find();
+    /* ------------------------------------------------------- */
 
-    //* the field you want display give true value. _id default is true
-    //* the field you want to expand with more detail, send the name of in populate method.
-    const result = await BlogPost.find(
-      {},
-      { categoryId: true, title: true, content: true, userId: true }
-    ).populate(["categoryId", "userId"]);
+    //* FILTERING & SEARCHING & SORTING & PAGINATION
+
+    //* Filter: mutlak esitlik arar.
+    //* Search: kismi esitlik arar.
+    //* filtering, searching, sorting ve pagination islemlerinin en iyi cözüm yöntemleri asagidaki gibidir:
+
+    //* FILTERING:
+    // URL?filter[fieldName1]=value1&filter[fieldName2]=value2 //* istedigim kadar filtrering yapabilirim.
+    const filter = req.query?.filter || {}; //* undefined gelmemesi icin bos obje {} döndürür.
+
+    //* SEARCHING:
+    // URL?search[fieldName1]=value1&search[fieldName2]=value2
+    const search = req.query?.search || {};
+
+    const result = await BlogPost.find();
 
     res.status(200).send({
       error: false,
