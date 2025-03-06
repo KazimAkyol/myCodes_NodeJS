@@ -97,14 +97,45 @@ module.exports.blogPost = {
     //* filtering, searching, sorting ve pagination islemlerinin en iyi cözüm yöntemleri asagidaki gibidir:
 
     //* FILTERING:
-    // URL?filter[fieldName1]=value1&filter[fieldName2]=value2 //* istedigim kadar filtrering yapabilirim.
+    // URL?filter[fieldName1]=value1&filter[fieldName2]=value2 //* istedigim kadar filtering yapabilirim.
     const filter = req.query?.filter || {}; //* undefined gelmemesi icin bos obje {} döndürür.
 
     //* SEARCHING:
     // URL?search[fieldName1]=value1&search[fieldName2]=value2
+    // https://www.mongodb.com/docs/manual/reference/operator/query/regex/
+    // { "<field>": { "$regex": "pattern" } } -> { title: {"$regex":"test 1"}}
+
     const search = req.query?.search || {};
 
-    const result = await BlogPost.find();
+    //* mongoDb'nin istedigi bir sekilde search query yazilir:
+    for (let key in search) search[key] = { $regex: search[key] };
+
+    //* SORTING:
+    // URL?sort[fieldName1]=asc&sort[fieldName2]=desc
+    const sort = req.query?.sort || {};
+
+    //* PAGINATION:
+    // URL?page=3&limit=15&skip=20
+
+    // LIMIT:
+    let limit = Number(req.query?.limit);
+    limit = limit > 0 ? limit : Number(process.env?.PAGE_SIZE) || 20;
+
+    // PAGE:
+    let page = Number(req.query?.page);
+    page = page > 0 ? page : 1;
+
+    // SKIP:
+    let skip = Number(req.query?.skip);
+    skip = skip > 0 ? skip : (page - 1) * limit;
+
+    const result = await BlogPost.find({ ...filter }, { ...search })
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
+      .populate("categoryId");
+
+    /* ------------------------------------------------------- */
 
     res.status(200).send({
       error: false,
