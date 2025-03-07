@@ -1,4 +1,5 @@
 "use strict";
+const { Model } = require("mongoose");
 /* -------------------------------------------------------
              EXPRESSJS - BLOG Project with Mongoose
 ------------------------------------------------------- */
@@ -46,13 +47,22 @@ module.exports = (req, res, next) => {
   let skip = Number(req.query?.skip);
   skip = skip > 0 ? skip : (page - 1) * limit;
 
-  res.getModelList = async (Model) => {
-    const result = await BlogPost.find({ ...filter }, { ...search })
+  // getModelList:
+  res.getModelList = async (Model, populate = null) => {
+    return await Model.find({ ...filter }, { ...search })
       .sort(sort)
       .skip(skip)
       .limit(limit)
-      .populate("categoryId");
+      .populate(populate);
   };
+
+  // getModelListDetails:
+
+  res.getModelListDetail = async function(params) {
+
+    const data = await Model.find()
+  }
+
 
   next();
 };

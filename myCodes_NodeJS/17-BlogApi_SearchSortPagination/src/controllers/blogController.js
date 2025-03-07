@@ -10,7 +10,7 @@ const { BlogCategory, BlogPost } = require("../models/blogModel");
 // BlogCategory Controller:
 module.exports.blogCategory = {
   list: async (req, res) => {
-    const result = await BlogCategory.find();
+    const result = await res.getModelList(BlogCategory);
 
     res.status(200).send({
       error: false,
@@ -18,7 +18,7 @@ module.exports.blogCategory = {
     });
   },
 
-  // CRUD ->
+  //* CRUD ->
 
   create: async (req, res) => {
     const result = await BlogCategory.create(req.body);
@@ -137,7 +137,7 @@ module.exports.blogPost = {
 
     /* ------------------------------------------------------- */
 
-    const result = await BlogPost.find();
+    const result = await res.getModelList(BlogPost, "categoryId");
 
     res.status(200).send({
       error: false,

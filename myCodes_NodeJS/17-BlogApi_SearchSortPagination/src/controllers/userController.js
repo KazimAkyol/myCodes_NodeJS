@@ -10,7 +10,7 @@ const User = require("../models/blogModel");
 
 module.exports = {
   list: async (req, res) => {
-    const result = await User.find();
+    const result = await res.getModelList(User);
 
     res.status(200).send({
       error: false,
@@ -18,7 +18,7 @@ module.exports = {
     });
   },
 
-  // CRUD ->
+  //* CRUD ->
 
   create: async (req, res) => {
     const result = await User.create(req.body);
