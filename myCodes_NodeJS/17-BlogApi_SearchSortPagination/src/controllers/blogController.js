@@ -88,7 +88,7 @@ module.exports.blogCategory = {
 // BlogPost Controller:
 module.exports.blogPost = {
   list: async (req, res) => {
-    /* ------------------------------------------------------- */
+    /* ------------------------------------------------------- *
 
     //* FILTERING & SEARCHING & SORTING & PAGINATION
 
@@ -136,6 +136,8 @@ module.exports.blogPost = {
       .populate("categoryId");
 
     /* ------------------------------------------------------- */
+
+    const result = await BlogPost.find();
 
     res.status(200).send({
       error: false,

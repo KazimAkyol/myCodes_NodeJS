@@ -45,4 +45,14 @@ module.exports = (req, res, next) => {
   // SKIP:
   let skip = Number(req.query?.skip);
   skip = skip > 0 ? skip : (page - 1) * limit;
+
+  res.getModelList = async (Model) => {
+    const result = await BlogPost.find({ ...filter }, { ...search })
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
+      .populate("categoryId");
+  };
+
+  next();
 };
