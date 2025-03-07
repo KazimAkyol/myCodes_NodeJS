@@ -48,7 +48,7 @@ module.exports = (req, res, next) => {
   skip = skip > 0 ? skip : (page - 1) * limit;
 
   // getModelList:
-  res.getModelList = async (Model, populate = null) => {
+  res.getModelLists = async (Model, populate = null) => {
     return await Model.find({ ...filter }, { ...search })
       .sort(sort)
       .skip(skip)
@@ -58,11 +58,30 @@ module.exports = (req, res, next) => {
 
   // getModelListDetails:
 
-  res.getModelListDetail = async function(params) {
+  res.getModelListDetail = async function (Model) {
+    const data = await Model.find({ ...filter }, { ...search });
 
-    const data = await Model.find()
-  }
+    let details = {
+      filter,
+      search,
+      sort,
+      skip,
+      limit,
+      page,
+      totalRecords: data.length,
+      pages: {
+        previos: page > 1 ? page - 1 : false,
+        current: page,
+        next: page + 1,
+        total: Math.ceil(data.length / limit),
+      },
+    };
 
+    if (details.pages.next > details.pages.total) details.pages.next = false;
+    if (details.totalRecords <= limit) details.pages = false;
+
+    return details;
+  };
 
   next();
 };

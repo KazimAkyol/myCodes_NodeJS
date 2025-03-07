@@ -14,6 +14,7 @@ module.exports.blogCategory = {
 
     res.status(200).send({
       error: false,
+      details: await res.getModelListDetails(BlogCategory),
       result,
     });
   },
@@ -141,6 +142,7 @@ module.exports.blogPost = {
 
     res.status(200).send({
       error: false,
+      details: await res.getModelListDetails(BlogPost),
       result,
     });
   },
