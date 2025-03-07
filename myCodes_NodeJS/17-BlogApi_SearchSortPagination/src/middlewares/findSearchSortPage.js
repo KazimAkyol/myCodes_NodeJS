@@ -1,11 +1,7 @@
 "use strict";
-const { Model } = require("mongoose");
 /* -------------------------------------------------------
              EXPRESSJS - BLOG Project with Mongoose
 ------------------------------------------------------- */
-
-const { populate } = require("../models/userModel");
-
 //* QUERY HANDLER MIDDLEWARE:
 
 module.exports = (req, res, next) => {
