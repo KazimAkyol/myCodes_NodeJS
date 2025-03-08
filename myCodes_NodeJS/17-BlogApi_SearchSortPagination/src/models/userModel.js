@@ -4,6 +4,7 @@
 ------------------------------------------------------- */
 
 const mongoose = require("mongoose");
+const passwordEncrypte = require("../helpers/passwordEncrypt");
 
 /* -------------------------------------------------------*
 
