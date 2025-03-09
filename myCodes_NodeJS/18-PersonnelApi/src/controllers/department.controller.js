@@ -3,11 +3,17 @@
     EXPRESS - Personnel API
 ------------------------------------------------------- */
 
+const Department = require('../models/department.model')
+
 module.exports = {
   list: async (req, res) => {
+
+    const result = await res.getModelList(Department)
     
-    res.status().send({
+    res.status(200).send({
       error: false,
+      details: await res.getModelListDetails(Department),
+      result
     });
   },
 

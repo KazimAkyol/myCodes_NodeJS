@@ -62,7 +62,7 @@ app.all("/", (req, res) => {
   });
 });
 
-// Blog & User routes
+// blog & user & auth routes
 app.use("/blog", require("./src/routes/blogRouter"));
 app.use("user", require("./src/routes/userRouter"));
 app.use("auth", require("./src/routes/authRouter"));
