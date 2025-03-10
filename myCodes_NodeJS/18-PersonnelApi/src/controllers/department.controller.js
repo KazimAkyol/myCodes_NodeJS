@@ -19,8 +19,11 @@ module.exports = {
 
   create: async (req, res) => {
 
-    res.status().send({
+    const result = await Department.create(req.body)
+
+    res.status(201).send({
       error: false,
+      result
     });
   },
   
