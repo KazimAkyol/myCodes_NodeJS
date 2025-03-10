@@ -3,48 +3,60 @@
     EXPRESS - Personnel API
 ------------------------------------------------------- */
 
-const Department = require('../models/department.model')
+const Department = require("../models/department.model");
 
 module.exports = {
   list: async (req, res) => {
+    const result = await res.getModelList(Department);
 
-    const result = await res.getModelList(Department)
-    
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(Department),
-      result
+      result,
     });
   },
 
   create: async (req, res) => {
-
-    const result = await Department.create(req.body)
+    const result = await Department.create(req.body);
 
     res.status(201).send({
       error: false,
-      result
+      result,
     });
   },
-  
-  read: async (req, res) => {
 
-    res.status().send({
+  read: async (req, res) => {
+    const result = await Department.findOne({ _id: req.params.id });
+
+    res.status(200).send({
       error: false,
+      result,
     });
   },
 
   update: async (req, res) => {
+    const result = await Department.updateOne(
+      { _id: req.params.id },
+      req.body,
+      {
+        runValidators: true, //* model'de bir validation islemi varsa update'de tekrardan calistir.
+        new: true,
+      }
+    );
 
-    res.status().send({
+    res.status(202).send({
       error: false,
+      result,
+      new: await Department.findOne({ _id: req.params.id }),
     });
   },
 
   delete: async (req, res) => {
+    const result = await Department.deleteOne({ _id: req.params.id });
 
-    res.status().send({
-      error: false,
+    res.status(result.deletedCount ? 204 : 404).send({
+      error: true,
+      message: "Data is not found or already deleted.",
     });
   },
 };

@@ -26,7 +26,7 @@ module.exports.blogCategory = {
 
     res.status(201).send({
       error: false,
-      result,
+      result
     });
   },
 
@@ -37,7 +37,7 @@ module.exports.blogCategory = {
 
     res.status(200).send({
       error: false,
-      result,
+      result
     });
   },
 
@@ -61,7 +61,7 @@ module.exports.blogCategory = {
     res.status(202).send({
       error: false,
       result,
-      new: await BlogCategory.findById(req.params.categoryId),
+      new: await BlogCategory.findById(req.params.categoryId)
     });
   },
 
