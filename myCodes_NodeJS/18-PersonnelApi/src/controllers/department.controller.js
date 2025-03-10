@@ -40,14 +40,13 @@ module.exports = {
       req.body,
       {
         runValidators: true, //* model'de bir validation islemi varsa update'de tekrardan calistir.
-        new: true,
+        new: true, // returns updated data
       }
     );
 
     res.status(202).send({
       error: false,
-      result,
-      new: await Department.findOne({ _id: req.params.id }),
+      result
     });
   },
 
