@@ -28,6 +28,18 @@ app.use(express.json());
 // Query Handler:
 app.use(require("./src/middlewares/findSearchSortPage"));
 
+// Cookie-Session:
+app.use(
+  require("cookie-session")({
+    secret: process.env.SECRET_KEY,
+    // cookie: {
+    //     secure: true, // this is accept only https
+    //     httpOnly: false, // this is for XSS Cross Site Scripting
+    //     maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    //   }
+  })
+);
+
 /* ------------------------------------------------------- */
 //* Routes:
 
@@ -36,6 +48,7 @@ app.all("/", (req, res) => {
   res.send({
     error: false,
     message: "Welcome to Personnel API Service",
+    session: req.session
   });
 });
 
