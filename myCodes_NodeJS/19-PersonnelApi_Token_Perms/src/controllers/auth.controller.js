@@ -4,8 +4,8 @@
 ------------------------------------------------------- */
 
 const Personnel = require("../models/personnel.model");
-const Token = require('../models/token.model')
-const passwordEncrypt = require('../helpers/passwordEncrypt')
+const Token = require("../models/token.model");
+const passwordEncrypt = require("../helpers/passwordEncrypt");
 
 module.exports = {
   login: async (req, res) => {
@@ -19,19 +19,21 @@ module.exports = {
 
       if (user) {
         if (user.isActive) {
+          //* Token (var mi yok mu?)
+          let tokenData = await Token.findOne({ userId: user._id });
 
-            //* Token (var mi yok mu?)
-            let tokenData = await Token.findOne({userId:user._id})
-
-            //* Create Token
+          //* Create Token
+          if (!tokenData) {
             tokenData = await Token.create({
-                userId: user._id,
-                token: passwordEncrypt(Date.now() + user._id)
-            })
+              userId: user._id,
+              token: passwordEncrypt(Date.now() + user._id),
+            });
+          }
 
           res.status(200).send({
             error: false,
-            tokenData
+            token: tokenData.token,
+            user,
           });
         } else {
           res.errorStatusCode = 401;
@@ -47,7 +49,9 @@ module.exports = {
     }
   },
 
-  logout: async (req, res) => {},
+  logout: async (req, res) => {
+    
+  },
 };
 
 /* ------------------------------------------------------- *

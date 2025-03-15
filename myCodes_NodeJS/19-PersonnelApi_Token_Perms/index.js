@@ -40,6 +40,9 @@ app.use(
   })
 );
 
+// Authentication Middlware
+app.use(require("./src/middlewares/authentication"));
+
 /* ------------------------------------------------------- */
 //* Routes:
 
