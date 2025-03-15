@@ -1,34 +1,54 @@
-"use strict"
+"use strict";
 /* -------------------------------------------------------
     EXPRESS - Personnel API
 ------------------------------------------------------- */
 
-const Personnel = require('../models/personnel.model');
-
+const Personnel = require("../models/personnel.model");
+const Token = require('../models/token.model')
+const passwordEncrypt = require('../helpers/passwordEncrypt')
 
 module.exports = {
+  login: async (req, res) => {
+    const { username, email, password } = req.body;
 
-    login: async (req, res) => {
+    if ((username || email) && password) {
+      const user = await Personnel.findOne({
+        $or: [{ email }, { username }],
+        password,
+      });
 
-        const {username, email, password} = req.body
+      if (user) {
+        if (user.isActive) {
 
-        if ((username || email) && password) {
-            res.status(200).send({
-                error:false,
+            //* Token (var mi yok mu?)
+            let tokenData = await Token.findOne({userId:user._id})
+
+            //* Create Token
+            tokenData = await Token.create({
+                userId: user._id,
+                token: passwordEncrypt(Date.now() + user._id)
             })
+
+          res.status(200).send({
+            error: false,
+            tokenData
+          });
         } else {
-            res.errorStatusCode = 401
-            throw new Error('Please enter username/email and password')
+          res.errorStatusCode = 401;
+          throw new Error("The user status is not active");
         }
-
-        
-    },
-
-    logout: async (req, res) => {
-
+      } else {
+        res.errorStatusCode = 401;
+        throw new Error("Wrong email/username and password");
+      }
+    } else {
+      res.errorStatusCode = 401;
+      throw new Error("Please enter username/email and password");
     }
-};
+  },
 
+  logout: async (req, res) => {},
+};
 
 /* ------------------------------------------------------- *
 //* Login & Logout with cookie-session
