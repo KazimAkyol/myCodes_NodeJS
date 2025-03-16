@@ -50,6 +50,13 @@ module.exports = {
   },
 
   logout: async (req, res) => {
+    // let result;
+    // if (req.user) {
+    //   result = awaitToken.deleteOne({ userId: req.user._id });
+    // } else {
+    //   result = null;
+    // }
+
     const result = req.user
       ? await Token.deleteOne({ userId: req.user._id })
       : null;
