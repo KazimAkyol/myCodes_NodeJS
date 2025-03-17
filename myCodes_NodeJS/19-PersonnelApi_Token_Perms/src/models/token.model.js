@@ -7,6 +7,7 @@ const { mongoose } = require("../configs/dbConnection");
 
 const TokenSchema = new mongoose.Schema(
   {
+    //* Olusturulan token'in kime ait oldugu userId'den anlasilir.
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Personnel", //* Kullanici bilgileri bu modelde oldugu icin reference olarak Personnel model yazilir.
@@ -27,3 +28,5 @@ const TokenSchema = new mongoose.Schema(
 
 /* ------------------------------------------------------- */
 module.exports = mongoose.model("Token", TokenSchema);
+
+//* token.controller.js ve token.router.js sayfalarini olusturmamizin nedeni admin tarafindan görüntülenmesi icin.

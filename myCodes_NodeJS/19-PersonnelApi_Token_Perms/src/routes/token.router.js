@@ -4,8 +4,11 @@
 ------------------------------------------------------- */
 const router = require("express").Router();
 const token = require("../controllers/token.controller");
+const { isAdmin } = require("../middlewares/permissions");
 /* ------------------------------------------------------- */
 // URL: /tokens
+
+router.use(isAdmin);  //* her bir route'dan önce isLogin permission'i kullanmak icin kisayolda bu sekilde yazilabilir.
 
 router.route("/").get(token.list).post(token.create);
 

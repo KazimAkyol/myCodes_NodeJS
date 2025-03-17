@@ -6,11 +6,12 @@
 const Personnel = require("../models/personnel.model");
 
 module.exports = {
-  //* User login oldugunda buradaki login controller calisacak.
+  //* User login oldugunda buradaki login controller calisacak:
+
   login: async (req, res) => {
     const { username, email, password } = req.body;
 
-    //* email ve password'ü gönderip göndermedigini kontrol etmek icin:
+    //* username or email ve password'ü gönderip göndermedigini kontrol etmek icin:
 
     if ((username || email) && password) {
       const user = await Personnel.findOne({
