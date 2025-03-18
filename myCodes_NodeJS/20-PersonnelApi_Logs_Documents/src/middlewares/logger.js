@@ -13,7 +13,8 @@ const morgan = require("morgan");
 // app.use(morgan("short"));
 // app.use(morgan("dev"));
 // app.use(morgan("common"));
-// app.use(morgan("combined")); //* Thunder'da departments URL'e bir GET istegi atildiginda Terminal'de ::ffff:127.0.0.1 - - [17/Mar/2025:15:20:39 +0000] "GET /departments/ HTTP/1.1" 403 102 "-" "Thunder Client (https://www.thunderclient.com)" böyle bir sonuca ulasilir.
+// app.use(morgan("combined"));
+//* Thunder'da departments URL'e bir GET istegi atildiginda Terminal'de ::ffff:127.0.0.1 - - [17/Mar/2025:15:20:39 +0000] "GET /departments/ HTTP/1.1" 403 102 "-" "Thunder Client (https://www.thunderclient.com)" böyle bir sonuca ulasilir.
 //* Biz combined'i kullanacagiz.
 
 // Custom log:

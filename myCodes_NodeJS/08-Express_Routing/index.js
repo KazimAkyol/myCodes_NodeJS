@@ -8,11 +8,11 @@
 // $ npm i express dotenv
 // $ nodemon
 
-//* Express Start
+//* ExpressJS Start
 
-const express = require("express"); // Express değişkenine express Framework atadik.
+const express = require("express"); //* Express değişkenine express Framework atadik.
 
-const app = express(); // Run application on express.
+const app = express(); //* Run application on express.
 
 //* Env
 require("dotenv").config();
@@ -21,7 +21,7 @@ const PORT = process.env.PORT;
 /* ------------------------------------------------------------------------ *
 //* HTTP_METHODS & URLS:
 
-app.get("/", (req, res) => res.end("called in 'get' method. "));
+app.get("/", (req, res) => res.end("called in 'get' method."));
 app.post("/", (req, res) => res.end("called in 'post' method."));
 app.put("/", (req, res) => res.end("called in 'put' method."));
 app.patch("/", (req, res) => res.end("called in 'patch' method."));
@@ -32,7 +32,7 @@ app.all("/", (req, res) => res.end("called in 'all' method."));
 
 //* app.route('url')
 app
-  .route("")
+  .route("/")
   .get((req, res) => res.send("get"))
   .post((req, res) => res.send("post"))
   .put((req, res) => res.send("put"))
@@ -58,7 +58,7 @@ app.get(/xyz$/, (req, res) => res.send("regexp /xyz$/")); // url ends with ='xyz
 //* URL Parameters:
 
 app.get("/blogs/:blogId/:author/search/*", (req, res) => {
-  console.log(req); // request bir obje yapisindadir ve icindeki degerlere nokta '.' notasyonuyla ulasabiliriz.
+  //   console.log(req); // request bir obje yapisindadir ve icindeki degerlere nokta '.' notasyonuyla ulasabiliriz.
 
   res.send({
     blogId: req.params.blogId,
@@ -76,8 +76,8 @@ app.get("/blogs/:blogId/:author/search/*", (req, res) => {
   });
 });
 
-// app.get('/user/:userId([0-9]+)', (req,res) => {
-app.get("/user/:userId([0-9]+)", (req, res) => {
+// app.get('/user/:userId([0-9]+)', (req, res) => {
+app.get("/user/:userId(\\d+)", (req, res) => {
   res.send({
     params: req.params,
   });
@@ -104,10 +104,10 @@ app.get("/", (req, res) => {
 
 //* Status Codes:
 
-app.get("status-code", (req, res) => res.send({ message: "OK" })); // default statusCode:200
-app.post("status-code", (req, res) =>
+app.get("/status-codes", (req, res) => res.send({ message: "OK" })); // default statusCode:200
+app.post("/status-codes", (req, res) =>
   res.status(201).send({ message: "Created" })
-); // post:201
+); // post - 201
 app.put("/status-codes", (req, res) =>
   res.status(202).send({ message: "Accepted" })
 ); // put:202
@@ -117,9 +117,13 @@ app.delete("/status-codes", (req, res) =>
 
 /* ------------------------------------------------------------------------ */
 
-//* Download File:
-
+//? Download File:
 app.get("/download", (req, res) =>
+  res.download(".index.js", "changendName.txt")
+);
+
+//? Redirect:
+app.get("/redirect", (req, res) =>
   res.redirect(301, "https://www.clarusway.com")
 );
 app.get("/redirect-temp", (req, res) =>
@@ -128,4 +132,4 @@ app.get("/redirect-temp", (req, res) =>
 
 /* ------------------------------------------------------------------------ */
 
-app.listen(PORT, () => console.log("Running at: http://127.0.0.1:8000" + PORT));
+app.listen(PORT, () => console.log("Running at: http://127.0.0.1:" + PORT));
