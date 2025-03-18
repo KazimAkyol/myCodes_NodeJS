@@ -43,6 +43,10 @@ app.use(
 // Authentication Middleware
 app.use(require("./src/middlewares/authentication"));
 
+//Logger
+app.use(require("./src/middlewares/logger"));
+
+/* ------------------------------------------------------- *
 // Logger
 // $ npm i morgan
 // $ https://expressjs.com/en/resources/middleware/morgan.html
