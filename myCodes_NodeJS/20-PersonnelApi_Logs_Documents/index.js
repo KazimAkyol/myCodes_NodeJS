@@ -90,6 +90,14 @@ app.use(
 //* Bu kod blogunu yazdiktan sonra dosya ana dizininde logs adinda bir klasör olusturulur ve bundan sonra gün gün tutulacak log kayitlari buraya kaydedilir.
 
 /* ------------------------------------------------------- */
+
+// Documentation
+// $ npm i swagger-autogen # JSON Creator
+
+
+
+
+/* ------------------------------------------------------- */
 //* Routes:
 
 // Home path
