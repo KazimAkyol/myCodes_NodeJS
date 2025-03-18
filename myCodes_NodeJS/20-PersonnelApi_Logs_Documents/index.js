@@ -62,12 +62,28 @@ const customLog =
 // app.use(morgan(customLog));
 
 // Write to file
+// const fs = require("node:fs");
+// app.use(
+//   morgan(customLog, {
+//     stream: fs.createWriteStream("./examplelogs.log", { flags: "a+" }), //* Bir dosyayi yazdirmak icin stream degiskeni kullanilir.
+//   })
+// );
+
+//* Böylelikle bizim yaptigimiz API service'na her bir istek atildiginda log kaydini tutmus olacagiz.
+
+// Write to file - Day by Day;
 const fs = require("node:fs");
+const now = new Date();
+// console.log(now);
+const today = now.toISOString().split("T")[0];
+console.log(today);
 app.use(
   morgan(customLog, {
-    stream: fs.createWriteStream("./examplelogs.log", { flags: "a+" }), //* Bir dosyayi yazdirmak icin stream degiskeni kullanilir.
+    stream: fs.createWriteStream(`./logs/${today}.log`, { flags: "a+" }),
   })
 );
+
+//* Bu kod blogunu yazdiktan sonra dosya ana dizininde logs adinda bir klasör olusturulur ve bundan sonra gün gün tutulacak log kayitlari buraya kaydedilir.
 
 /* ------------------------------------------------------- */
 //* Routes:
