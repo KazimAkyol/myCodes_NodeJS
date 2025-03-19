@@ -64,8 +64,20 @@ module.exports = {
   },
 
   logout: async (req, res) => {
+    /*
+        #swagger.tags = ["Tokens"]
+        #swagger.summary = "Create Token"
+    */
+
+    const result = req.user
+      ? await Token.deleteOne({ userId: req.user._id })
+      : null;
+
     res.status(200).send({
       error: false,
+      message: result.deletedCount
+        ? "User logged out and token deleted."
+        : "User Logged out.",
     });
   },
 };
