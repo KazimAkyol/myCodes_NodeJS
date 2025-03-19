@@ -22,7 +22,7 @@ const Userschema = new mongoose.Schema(
       index: true,
       unique: true,
       validate: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email),
+        (email) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email),
         "Please enter a valid email address.",
       ],
     },

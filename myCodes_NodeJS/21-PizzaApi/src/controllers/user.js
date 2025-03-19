@@ -19,7 +19,7 @@ module.exports = {
                     <li>URL/?<b>page=2&limit=1</b></li>
                 </ul>
             `
-        */
+    */
     //* swagger'lari kullanabilmek icin(dökümantasyon yazabilmek icin) yorum satirinin icinde # isareti swagger yazip ici istenildigi gibi doldurulabilir.
 
     const result = await res.getModelList(User); //* daha detayli islemleri yapabilmek icin getModelList kullanildi.
@@ -33,9 +33,9 @@ module.exports = {
 
   create: async (req, res) => {
     /* 
-            #swagger.tags = ['Users']
-            #swagger.summary = 'Create User'
-        */
+        #swagger.tags = ['Users']
+        #swagger.summary = 'Create User'
+    */
 
     if (
       !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(
@@ -58,9 +58,9 @@ module.exports = {
 
   read: async (req, res) => {
     /* 
-            #swagger.tags = ['Users']
-            #swagger.summary = 'Get Single User'
-        */
+        #swagger.tags = ['Users']
+        #swagger.summary = 'Get Single User'
+    */
 
     const result = await User.findOne({ _id: req.params.id });
 
@@ -72,26 +72,30 @@ module.exports = {
 
   update: async (req, res) => {
     /* 
-            #swagger.tags = ['Users']
-            #swagger.summary = 'Update User'
-        */
+        #swagger.tags = ['Users']
+        #swagger.summary = 'Update User'
+    */
 
     const result = await User.updateOne({ _id: req.params.id }, req.body, {
       runValidators: true,
-      new: true,
     });
+
+    if (result.modifiedCount) {
+      res.errorStatusCode = 404;
+      throw new Error("Data is not updated");
+    }
 
     res.status(202).send({
       error: false,
-      result,
+      new: await User.updateOne({ _id: req.params.id }),
     });
   },
 
   delete: async (req, res) => {
     /* 
-            #swagger.tags = ['Users']
-            #swagger.summary = 'Delete User'
-        */
+        #swagger.tags = ['Users']
+        #swagger.summary = 'Delete User'
+    */
 
     const result = await User.deleteOne({ _id: req.params.id });
 
