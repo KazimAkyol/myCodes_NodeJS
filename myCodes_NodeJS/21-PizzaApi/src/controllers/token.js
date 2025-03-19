@@ -37,17 +37,6 @@ module.exports = {
         #swagger.summary = 'Create Token'
     */
 
-    if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(
-        req?.body?.password
-      )
-    ) {
-      res.errorStatusCode = 401;
-      throw new Error(
-        "Password must be at least 8 characters long and contain at least one special character and  at least one uppercase character"
-      );
-    }
-
     const result = await Token.create(req.body);
 
     res.status(201).send({
