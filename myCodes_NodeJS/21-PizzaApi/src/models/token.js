@@ -9,7 +9,7 @@ const TokenSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Types.ObjectId,
-      ref: "User",
+      ref: "User", //* controller'daki user'in ismi User.
       required: true,
       unique: true,
       index: true,
@@ -26,5 +26,4 @@ const TokenSchema = new mongoose.Schema(
   { collection: "tokens", timestamps: true }
 );
 
-// Model:
 module.exports = mongoose.model("Token", TokenSchema);
