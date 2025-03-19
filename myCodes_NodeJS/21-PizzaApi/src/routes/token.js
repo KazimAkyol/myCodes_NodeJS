@@ -17,4 +17,4 @@ router
   .delete(token.delete);
 
 /* ------------------------------------------------------- */
-module.exports = router; 
+module.exports = router;
