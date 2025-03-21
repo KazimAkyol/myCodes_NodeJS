@@ -11,18 +11,18 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   login: async (req, res) => {
     /*
-            #swagger.tags = ["Authentication"]
-            #swagger.summary = "Login"
-            #swagger.description = 'Login with username (or email) and password for get simpleToken and JWT'
-            #swagger.parameters["body"] = {
-                in: "body",
-                required: true,
-                schema: {
-                    "username": "test",
-                    "password": "aA12345.?",
+                #swagger.tags = ["Authentication"]
+                #swagger.summary = "Login"
+                #swagger.description = 'Login with username (or email) and password for get simpleToken and JWT'
+                #swagger.parameters["body"] = {
+                    in: "body",
+                    required: true,
+                    schema: {
+                        "username": "test",
+                        "password": "aA12345.?",
+                    }
                 }
-            }
-    */
+        */
 
     const { username, email, password } = req.body;
 
@@ -94,26 +94,97 @@ module.exports = {
 
     res.status(200).send({
       error: false,
+      bearer: {
+        //* jwt ile beraber kullanilir.
+        acces: accessToken,
+        refresh: refreshToken,
+      },
       token: tokenData.token,
       user,
     });
   },
 
-  logout: async (req, res) => {
+  refresh: async (req, res) => {
     /*
-           #swagger.tags = ["Tokens"]
-           #swagger.summary = "Create Token"
-        */
+            #swagger.tags = ["Authentication"]
+            #swagger.summary = "Refresh"
+            #swagger.description = 'Refresh with refreshToken for get accessToken'
+            #swagger.parameters["body"] = {
+                in: "body",
+                required: true,
+                schema: {
+                    "bearer": {
+                    refresh:"...refreshToken..."
+                    },
+                }
+            }
+    */
 
-    const result = req.user
-      ? await Token.deleteOne({ userId: req.user._id })
-      : null;
+    const { refresh } = req.body?.bearer;
+
+    if (!refresh) {
+      res.errorStatusCode = 401;
+      throw new Error("Refresh token not found.");
+    }
+
+    const refreshData = jwt.verify(refresh, process.env.REFRESH_KEY);
+
+    if (!refreshData) {
+      res.errorStatusCode = 401;
+      throw new Error("JWT Refresh data is wrong.");
+    }
+
+    const user = await User.findOne({ _id: refreshData._id });
+
+    if (!user && user.password !== refreshData.password) {
+      res.errorStatusCode = 401;
+      throw new Error("Wrong id or password.");
+    }
+
+    if (!user.isActive) {
+      res.errorStatusCode = 401;
+      throw new Error("This account is not active.");
+    }
+
+    const accessData = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      isActive: user.isActive,
+      isAdmin: user.isAdmin,
+    };
 
     res.status(200).send({
       error: false,
-      message: result?.deletedCount
-        ? "User logged out and token deleted."
-        : "User Logged out.",
+      bearer: {
+        access: jwt.sign(accessData, process.env.ACCESS_KEY, {
+          expiresIn: "1m",
+        }),
+      },
     });
+  },
+
+  logout: async (req, res) => {
+    /*
+           #swagger.tags = ["Authentication"]
+           #swagger.summary = "Logout"
+        */
+
+    const auth = req.headers?.authorization; // Token ...tokenKey... || Bearer ...jwtAccess...
+    const tokenKey = auth ? auth.split(" ") : null; // ['Token', '...tokenKey...'] || ['Bearer', '...jwtAccess...']
+
+    if (tokenKey[0] == "Token") {
+      const result = await Token.deleteOne({ userId: req.user._id });
+
+      res.status(200).send({
+        error: false,
+        result,
+        message: "Simple Token: Token deleted. Logout success.",
+      });
+    } else if (tokenKey[0] == "Bearer")
+      res.status(200).send({
+        error: false,
+        message: "JWT: No need any process for logout. Logout success.",
+      });
   },
 };
