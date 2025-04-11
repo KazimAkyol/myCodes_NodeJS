@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hello Everybody</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Hello Gokhan hocam 👋🏻</h1>
 
     <!-- Send code to nodejs -->
     <% console.log('this is from console') %>
 
     <!-- safe-print to html -->
-    <%= 5+9 %>
-    <%= '<p>Selam </p>' %>
+    <%= 5+9 %> <%= '
+    <p>Selam</p>
+    ' %>
 
     <!-- direct-print to html -->
-    <%- '<p>Selam </p>' %>
+    <%- '
+    <p>Selam</p>
+    ' %>
 
     <!-- comment with ejs -->
     <%# this is a comment line for ejs %>
-
-</body>
+  </body>
 </html>
