@@ -18,6 +18,7 @@
       <hr />
       <div class="rows">
         <h2>TODO LIST</h2>
+        <!-- todo.controller.view.js'den gönderilen count'u browser'a yazabilmek icin burada tanimlanir. JS tags browser'da gösterebilmek icin (<%= %>) seklinde yazilir. -->
         <p>Count: <%= count %></p>
         <table class="table table-striped">
           <thead>
@@ -32,16 +33,21 @@
             </tr>
           </thead>
           <tbody>
+            <!-- Örnegin kolay bir sekilde 5 tane todo yazabilmek ve asagida tanimlanan rows and columns yani tablolari olusturabilmek icin for döngüsü kullanilir. Bu (<% %>) tags arasinda JS yazilabilir: -->
             <% for (let todo of todos) { %>
             <tr>
+              <!-- JS kodunu HTML'e yazdirmak istiyoruz ve buna safe print denir. safe print'in ejs tagleri (<%= %>) burada kullanilir: -->
               <td># <%= todo.id %></td>
               <td><%= todo.title %></td>
               <td><%= todo.description %></td>
+              <!-- controller.view.js'de PRIORITES seklinde tanimlanan objeyi browser'da gösterebilmek icin asagida priorities[todo.priority] seklinde yazarak safe print'in ejs tagleri (<%= %>) burada kullanilir: -->
               <td><%= priorities[todo.priority] %></td>
               <td>
+                <!-- direct print ejs tagleri (<%- %>) ve ternary operatörü yardimiyla isDone YES or NO yazdirilabilir: -->
                 <%- todo.isDone ? '<span class="text-success"> YES </span>' :
                 '<span class="text-danger"> NO </span>' %>
               </td>
+              <!-- toLocaleDateString('tr') metoduyla tabloda gösterilen tarihler daha anlasilir hale getirilir: -->
               <td><%= todo.createdAt.toLocaleDateString('tr') %></td>
               <td>
                 <a class="btn btn-sm btn-secondary" href="/view/<%= todo.id %>"
@@ -60,6 +66,7 @@
                 >
               </td>
             </tr>
+            <!-- Burada süslü kapanis parantezi ejs (<% %>) tagleri arasinda yazilmalidir: -->
             <% }%>
           </tbody>
         </table>
