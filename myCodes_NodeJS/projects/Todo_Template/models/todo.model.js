@@ -5,48 +5,47 @@
 
 //? Sequelize
 
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require("sequelize");
 
 // Where is DB (DB Connnection Detail)
-const sequelize = new Sequelize('sqlite:./db.sqlite3');
+const sequelize = new Sequelize("sqlite:./db.sqlite3");
 
 //* Model:
 // sequelize.define('tableName', {columns})
-const Todo = sequelize.define('todos', {
+const Todo = sequelize.define("todos", {
+  // id: { // NO need to define ID field, it will be created auto.
+  //     type: DataTypes.INTEGER,
+  //     allowNull: false, // default:true
+  //     unique: true,
+  //     field: 'custom_name',
+  //     comment: 'description or comment',
+  //     primaryKey: true,
+  //     autoIncrement: true
+  // },
 
-    // id: { // NO need to define ID field, it will be created auto.
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false, // default:true
-    //     unique: true,
-    //     field: 'custom_name',
-    //     comment: 'description or comment',
-    //     primaryKey: true,
-    //     autoIncrement: true
-    // },
+  title: {
+    type: DataTypes.STRING(256), // varchar(256)
+    allowNull: false,
+  },
 
-    title: {
-        type: DataTypes.STRING(256), // varchar(256)
-        allowNull: false
-    },
+  description: DataTypes.TEXT, // Shorthand using
 
-    description: DataTypes.TEXT, // Shorthand using
+  priority: {
+    // -1:Low, 0:Normal, 1:High
+    type: DataTypes.SMALLINT,
+    allowNull: false,
+    defaultValue: 0,
+  },
 
-    priority: { // -1:Low, 0:Normal, 1:High
-        type: DataTypes.SMALLINT,
-        allowNull: false,
-        defaultValue: 0
-    },
+  isDone: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 
-    isDone: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-    },
+  // newField: DataTypes.TEXT
 
-    // newField: DataTypes.TEXT
-
-    // No need define createdAt & updatedAt fields. They are default created.
-
+  // No need define createdAt & updatedAt fields. They are default created.
 });
 
 //* Synchorization: // This methods should run only once.
@@ -55,8 +54,9 @@ const Todo = sequelize.define('todos', {
 // sequelize.sync({ alter: true }) // Backup from pervios table & Drop Table & Create Table from backup
 
 //* DB Connection:
-sequelize.authenticate()
-    .then(() => console.log('* DB Connected *'))
-    .catch(() => console.log('! DB Not Connected !'));
+sequelize
+  .authenticate()
+  .then(() => console.log("* DB Connected *"))
+  .catch(() => console.log("! DB Not Connected !"));
 
-module.exports = Todo
+module.exports = Todo;

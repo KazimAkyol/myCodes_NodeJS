@@ -28,7 +28,7 @@ module.exports = {
   create: async (req, res) => {
     if (req.method === "POST") {
       const result = await Todo.create(req.body);
-      res.redirect("/view");
+      res.redirect("/view"); //* data olusturulduktan sonra Todo List ekranina dönmesi icin bu sekilde yazilir.
     } else {
       res.render("todoCreate");
     }
@@ -45,7 +45,7 @@ module.exports = {
     if (req.method === "POST") {
       await Todo.update(req.body, { where: { id: req.params.id } });
 
-      res.redirect("/view");
+      res.redirect("/view"); //* data güncellendikten sonra Todo List ekranina dönmesi icin bu sekilde yazilir.
     } else {
       const result = await Todo.findByPk(req.params.id);
 
@@ -59,7 +59,7 @@ module.exports = {
     // todo when user click canel it still deletes the data. Fix please
 
     if (result) {
-      res.redirect("/view");
+      res.redirect("/view"); //* data silindikten sonra Todo List ekranina dönmesi icin bu sekilde yazilir.
     } else {
       // failed
       res.errorStatusCode = 404;
