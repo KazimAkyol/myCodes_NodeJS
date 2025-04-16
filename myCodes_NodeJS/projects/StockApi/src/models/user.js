@@ -71,7 +71,7 @@ UserSchema.pre(["save", "updateOne"], function (next) {
 
   const data = this?._update ?? this;
 
-  // Email Control:
+  //* Email Control:
   const isEmailValidated = data.email
     ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email)
     : true;
@@ -80,6 +80,7 @@ UserSchema.pre(["save", "updateOne"], function (next) {
     next(new Error("Email is not validated."));
   }
 
+  //* Password Control:
   const isPasswordValidated = data.password
     ? /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(data.password)
     : true;
@@ -89,11 +90,11 @@ UserSchema.pre(["save", "updateOne"], function (next) {
   }
 
   if (this._update) {
-    // Update
+    //* Update
 
     this._update.password = passwordEncrypt(data.password);
   } else {
-    // Save
+    //* Save
 
     this.password = passwordEncrypt(data.password);
   }

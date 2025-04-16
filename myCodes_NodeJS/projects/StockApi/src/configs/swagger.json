@@ -40,13 +40,13 @@
     "application/json"
   ],
   "paths": {
-    "/account/auth/login": {
+    "/auth/login": {
       "post": {
         "tags": [
           "Authentication"
         ],
         "summary": "Login",
-        "description": "Login with username (or email) and password.",
+        "description": "Login with username (or email) and password for get simpleToken and JWT",
         "parameters": [
           {
             "name": "body",
@@ -61,7 +61,7 @@
                 },
                 "password": {
                   "type": "string",
-                  "example": "1234"
+                  "example": "aA?123456"
                 }
               }
             }
@@ -74,50 +74,12 @@
         }
       }
     },
-    "/account/auth/logout": {
-      "get": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Logout",
-        "description": "Delete token key.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
+    "/auth/register": {
       "post": {
         "tags": [
           "Authentication"
         ],
-        "summary": "Logout",
-        "description": "Delete token key.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/users/": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "List Users",
-        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Create User",
+        "summary": "Register User",
         "description": "",
         "parameters": [
           {
@@ -139,21 +101,84 @@
                   "type": "string",
                   "example": "test@site.com"
                 },
-                "isActive": {
-                  "type": "boolean",
-                  "example": true
+                "firstName": {
+                  "type": "string",
+                  "example": "test"
                 },
-                "isAdmin": {
-                  "type": "boolean",
-                  "example": false
+                "lastName": {
+                  "type": "string",
+                  "example": "test"
                 }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "JWT: Refresh",
+        "description": "Refresh access-token by refresh-token.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bearer": {
+                  "type": "object",
+                  "properties": {
+                    "refresh": {
+                      "type": "string",
+                      "example": "___refreshToken___"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Token: Logout",
+        "description": "Delete token-key.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "List Users",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -191,41 +216,17 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string",
-                  "example": "test"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "1234"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "test@site.com"
-                },
-                "isActive": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "isAdmin": {
-                  "type": "boolean",
-                  "example": false
-                }
-              }
-            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -264,52 +265,53 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string",
-                  "example": "test"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "1234"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "test@site.com"
-                },
-                "isActive": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "isAdmin": {
-                  "type": "boolean",
-                  "example": false
-                }
-              }
-            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
     },
-    "/stock/brands/": {
+    "/tokens/{id}": {
+      "delete": {
+        "tags": [
+          "Tokens"
+        ],
+        "summary": "Delete Token",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/brands/": {
       "get": {
         "tags": [
           "Brands"
         ],
         "summary": "List Brands",
-        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -322,24 +324,26 @@
         ],
         "summary": "Create Brand",
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Brand"
-            }
-          }
-        ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
             "description": "Created"
+          },
+          "202": {
+            "description": "Accepted"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
     },
-    "/stock/brands/{id}": {
+    "/brands/{id}": {
       "get": {
         "tags": [
           "Brands"
@@ -372,19 +376,17 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Brand"
-            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "202": {
+            "description": "Accepted"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -423,30 +425,28 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Brand"
-            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "202": {
+            "description": "Accepted"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
     },
-    "/stock/categories/": {
+    "/categories/": {
       "get": {
         "tags": [
           "Categories"
         ],
         "summary": "List Categories",
-        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "description": "\r  You can use <u>filter[] & search[] & sort[] & page & limit</u> queries with endpoint.\r  <ul> Examples:\r   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=asc&sort[field2]=desc</b></li>\r   <li>URL/?<b>limit=10&page=1</b></li>\r  </ul>\r  ",
         "responses": {
           "200": {
             "description": "OK"
@@ -470,13 +470,13 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           }
         }
       }
     },
-    "/stock/categories/{id}": {
+    "/categories/{id}": {
       "get": {
         "tags": [
           "Categories"
@@ -577,13 +577,13 @@
         }
       }
     },
-    "/stock/firms/": {
+    "/firms/": {
       "get": {
         "tags": [
           "Firms"
         ],
         "summary": "List Firms",
-        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -596,24 +596,26 @@
         ],
         "summary": "Create Firm",
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Firm"
-            }
-          }
-        ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
             "description": "Created"
+          },
+          "202": {
+            "description": "Accepted"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
     },
-    "/stock/firms/{id}": {
+    "/firms/{id}": {
       "get": {
         "tags": [
           "Firms"
@@ -646,19 +648,17 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Firm"
-            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "202": {
+            "description": "Accepted"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -697,30 +697,28 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Firm"
-            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "202": {
+            "description": "Accepted"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
     },
-    "/stock/products/": {
+    "/products/": {
       "get": {
         "tags": [
           "Products"
         ],
         "summary": "List Products",
-        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "description": "\r  You can use <u>filter[] & search[] & sort[] & page & limit</u> queries with endpoint.\r  <ul> Examples:\r   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=asc&sort[field2]=desc</b></li>\r   <li>URL/?<b>limit=10&page=1</b></li>\r  </ul>\r  ",
         "responses": {
           "200": {
             "description": "OK"
@@ -744,13 +742,13 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           }
         }
       }
     },
-    "/stock/products/{id}": {
+    "/products/{id}": {
       "get": {
         "tags": [
           "Products"
@@ -851,13 +849,13 @@
         }
       }
     },
-    "/stock/purchases/": {
+    "/purchases/": {
       "get": {
         "tags": [
           "Purchases"
         ],
         "summary": "List Purchases",
-        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "description": "\r  You can use <u>filter[] & search[] & sort[] & page & limit</u> queries with endpoint.\r  <ul> Examples:\r   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=asc&sort[field2]=desc</b></li>\r   <li>URL/?<b>limit=10&page=1</b></li>\r  </ul>\r  ",
         "responses": {
           "200": {
             "description": "OK"
@@ -881,13 +879,13 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           }
         }
       }
     },
-    "/stock/purchases/{id}": {
+    "/purchases/{id}": {
       "get": {
         "tags": [
           "Purchases"
@@ -988,13 +986,13 @@
         }
       }
     },
-    "/stock/sales/": {
+    "/sales/": {
       "get": {
         "tags": [
           "Sales"
         ],
         "summary": "List Sales",
-        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "description": "\r  You can use <u>filter[] & search[] & sort[] & page & limit</u> queries with endpoint.\r  <ul> Examples:\r   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>\r   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r   <li>URL/?<b>sort[field1]=asc&sort[field2]=desc</b></li>\r   <li>URL/?<b>limit=10&page=1</b></li>\r  </ul>\r  ",
         "responses": {
           "200": {
             "description": "OK"
@@ -1018,13 +1016,13 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           }
         }
       }
     },
-    "/stock/sales/{id}": {
+    "/sales/{id}": {
       "get": {
         "tags": [
           "Sales"
@@ -1147,6 +1145,10 @@
             "unique": {
               "type": "boolean",
               "example": true
+            },
+            "index": {
+              "type": "boolean",
+              "example": true
             }
           }
         },
@@ -1181,6 +1183,10 @@
               "example": true
             },
             "unique": {
+              "type": "boolean",
+              "example": true
+            },
+            "index": {
               "type": "boolean",
               "example": true
             }
@@ -1273,7 +1279,7 @@
               "type": "boolean",
               "example": true
             },
-            "unique": {
+            "umique": {
               "type": "boolean",
               "example": true
             }
@@ -1310,7 +1316,7 @@
               "type": "boolean",
               "example": true
             },
-            "unique": {
+            "umique": {
               "type": "boolean",
               "example": true
             }
@@ -1485,7 +1491,7 @@
             "type": {
               "type": "function"
             },
-            "ref": {
+            "red": {
               "type": "string",
               "example": "Brand"
             },
@@ -1517,9 +1523,9 @@
             "type": {
               "type": "function"
             },
-            "default": {
-              "type": "number",
-              "example": 0
+            "required": {
+              "type": "boolean",
+              "example": true
             }
           }
         },
@@ -1529,9 +1535,9 @@
             "type": {
               "type": "function"
             },
-            "default": {
-              "type": "number",
-              "example": 0
+            "required": {
+              "type": "boolean",
+              "example": true
             }
           }
         },
@@ -1541,9 +1547,14 @@
             "type": {
               "type": "function"
             },
+            "set": {
+              "type": "function"
+            },
             "default": {
-              "type": "number",
-              "example": 0
+              "type": "function"
+            },
+            "transform": {
+              "type": "function"
             }
           }
         }
@@ -1574,7 +1585,7 @@
             "type": {
               "type": "function"
             },
-            "ref": {
+            "red": {
               "type": "string",
               "example": "Brand"
             },
@@ -1606,9 +1617,9 @@
             "type": {
               "type": "function"
             },
-            "default": {
-              "type": "number",
-              "example": 0
+            "required": {
+              "type": "boolean",
+              "example": true
             }
           }
         },
@@ -1618,9 +1629,9 @@
             "type": {
               "type": "function"
             },
-            "default": {
-              "type": "number",
-              "example": 0
+            "required": {
+              "type": "boolean",
+              "example": true
             }
           }
         },
@@ -1630,9 +1641,14 @@
             "type": {
               "type": "function"
             },
+            "set": {
+              "type": "function"
+            },
             "default": {
-              "type": "number",
-              "example": 0
+              "type": "function"
+            },
+            "transform": {
+              "type": "function"
             }
           }
         }
