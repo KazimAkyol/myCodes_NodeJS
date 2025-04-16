@@ -1,6 +1,6 @@
 "use strict";
 /* -------------------------------------------------------
-    NODEJS EXPRESS | Stock API
+    | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 
 const Firm = require("../models/firm");
