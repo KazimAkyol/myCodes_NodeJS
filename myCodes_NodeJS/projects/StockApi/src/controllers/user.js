@@ -30,14 +30,7 @@ module.exports = {
     });
   },
 
-  create: async (req, res) => {
-    const data = await User.create(req.body);
-
-    res.status(200).send({
-      error: false,
-      data,
-    });
-  },
+  //* auth.controller.js'de register islemi yapilacagindan dolayi create islemi silindi!!!
 
   read: async (req, res) => {
     /* 

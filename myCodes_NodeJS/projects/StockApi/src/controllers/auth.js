@@ -67,6 +67,7 @@ module.exports = {
     const accessToken = jwt.sign(accessData, process.env.ACCESS_KEY, {
       expiresIn: "30m",
     });
+
     const refreshToken = jwt.sign(
       { _id: user._id, password: user.password },
       process.env.REFRESH_KEY,
