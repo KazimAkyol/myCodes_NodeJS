@@ -49,12 +49,12 @@ module.exports = {
             }
         */
 
-    //? Set userId from loggedIn user
+    //* Set userId from loggedIn user
     req.body.userId = req.user._id;
 
     const data = await Purchase.create(req.body);
 
-    //? Increase the quantity of product which is bought
+    //* Increase the quantity of product which is bought
     await Product.updateOne(
       { _id: data.productId },
       { $inc: { quantity: data.quantity } }

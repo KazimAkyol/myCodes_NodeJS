@@ -48,8 +48,10 @@ module.exports = {
             }
         */
 
-    //? Set userId from loggedIn user
+    //* Set userId from loggedIn user
     req.body.userId = req.user._id;
+
+    //* Ürün stogunu kontrol etmek ve ürünlerin eksiye düsmesini engellemek icin;
 
     const currentProduct = await Product.findById(req.body.productId);
 
@@ -62,7 +64,7 @@ module.exports = {
 
     const data = await Sale.create(req.body);
 
-    //? Decrease quantity of product which is sold
+    //* Decrease quantity of product which is sold
     await Product.updateOne(
       { _id: data.productId },
       { $inc: { quantity: -data.quantity } }
@@ -105,7 +107,7 @@ module.exports = {
             }
         */
 
-    //? Update stocks
+    //* Update stocks
     if (req.body.quantity) {
       // get currentSale
       const currentSale = await Sale.findById(req.params.id);
@@ -141,7 +143,7 @@ module.exports = {
 
     const data = await Sale.deleteOne({ _id: req.params.id });
 
-    //? Increase quantity of product back
+    //* Increase quantity of product back
     if (data.deletedCount) {
       await Product.updateOne(
         { _id: currentSale.productId },

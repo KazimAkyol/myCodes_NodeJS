@@ -30,7 +30,7 @@ module.exports = {
     });
   },
 
-  //* auth.controller.js'de register islemi yapilacagindan dolayi create islemi silindi!!!
+  //* auth.controller.js'de register islemi olarak yapilacagindan dolayi create islemi buradan kesilip oraya yapistirildi ve ismi register olarak degistirildi!!!
 
   read: async (req, res) => {
     /* 
