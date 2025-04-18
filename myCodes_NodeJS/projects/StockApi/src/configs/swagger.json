@@ -280,31 +280,6 @@
         }
       }
     },
-    "/tokens/{id}": {
-      "delete": {
-        "tags": [
-          "Tokens"
-        ],
-        "summary": "Delete Token",
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
     "/brands/": {
       "get": {
         "tags": [

@@ -98,7 +98,7 @@ module.exports = {
             }
         */
 
-    //? Update stocks
+    //* Update stocks
     if (req.body.quantity) {
       // get currentSale
       const currentPurchase = await Purchase.findById(req.params.id);
@@ -134,7 +134,7 @@ module.exports = {
 
     const data = await Purchase.deleteOne({ _id: req.params.id });
 
-    //? Decrease quantity of product back
+    //* Decrease quantity of product back
     if (data.deletedCount) {
       await Product.updateOne(
         { _id: currentPurchase.productId },
