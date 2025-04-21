@@ -4,6 +4,7 @@
 ------------------------------------------------------- */
 const router = require("express").Router();
 const pizza = require("../controllers/pizza");
+const upload = require("../middlewares/upload");
 /* ------------------------------------------------------- *
 //* UPLOAD (Multer Middleware)
 // npm i multer

@@ -41,6 +41,9 @@ module.exports = {
 
     req.body.toppingIds = [...new Set(req.body.toppingIds)];
 
+    //* file upload
+    // console.log(req.file); // Single
+    // console.log(req.files); // Array
     if (req.file) {
       req.body.image = req.file.filename;
     }
@@ -74,6 +77,11 @@ module.exports = {
             #swagger.tags = ['Pizzas']
             #swagger.summary = 'Update Pizza'
         */
+
+    //* file upload
+    if (req.file) {
+      req.body.image = req.file.filename;
+    }
 
     const result = await Pizza.updateOne({ _id: req.params.id }, req.body, {
       runValidators: true,

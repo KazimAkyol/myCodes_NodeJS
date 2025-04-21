@@ -12,8 +12,9 @@ const multer = require("multer");
 module.exports = multer({
   //   dest: "./uploads", //* destination of images
   storage: multer.diskStorage({
-    destination: "./uploads",
+    destination: "./uploads", // indicate destination
     filename: function (req, file, cb) {
+      // Renames file
       console.log("file:", file);
       //   cb(error, this.filename)
       //   cb(null, file.originalname);
